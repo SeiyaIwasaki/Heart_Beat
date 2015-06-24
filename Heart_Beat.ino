@@ -16,12 +16,12 @@
 
 
 /* 静電容量センサ */
-const int transPin = 2;				// 送信用デジタルピンの番号
-const int recievePin = 3;			// 受信用デジタルピンの番号
+const int transPin = 2;			// 送信用デジタルピンの番号
+const int recievePin = 3;		// 受信用デジタルピンの番号
 const int thresholdHigh = 400;		// タッチ状態を識別するしきい値(上)
 const int thresholdLow = 300;		// タッチ状態を識別するしきい値(下)
-const int toSmall = 10;				// 検出された値が大きすぎる場合
-long capValue = 0;					// 検出された静電容量の値
+const int toSmall = 10;			// 検出された値が大きすぎる場合
+long capValue = 0;			// 検出された静電容量の値
 boolean touchStatus = false;		// タッチ状態
 boolean preTouchStatue = false;		// 前回のタッチ状態
 CapacitiveSensor *CapSensor = new CapacitiveSensor(transPin, recievePin);
@@ -36,7 +36,7 @@ int bufferIndex = 0;
 
 void setup() {
 	/* CapacitiveSensor 初期化 */
-	CapSensor->reset_CS_AutoCal();					// センサのキャリブレーション
+	CapSensor->reset_CS_AutoCal();			// センサのキャリブレーション
 	CapSensor->set_CS_AutocaL_Millis(0xFFFFFFFF);	// オートキャリブレーションのオフ
 	for(int i = 0; i < BUFFER_LENGTH; i++){
 		SenseCap();
