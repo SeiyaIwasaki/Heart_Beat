@@ -18,9 +18,9 @@
 /* 静電容量センサ */
 const int transPin = 2;			// 送信用デジタルピンの番号
 const int recievePin = 3;		// 受信用デジタルピンの番号
-const int thresholdHigh = 400;		// タッチ状態を識別するしきい値(上)
-const int thresholdLow = 300;		// タッチ状態を識別するしきい値(下)
-const int toSmall = 10;			// 検出された値が大きすぎる場合
+const int thresholdHigh = 200;		// タッチ状態を識別するしきい値(上)
+const int thresholdLow = 150;		// タッチ状態を識別するしきい値(下)
+const int toSmall = 1;			// 検出された値が大きすぎる場合
 long capValue = 0;			// 検出された静電容量の値
 boolean touchStatus = false;		// タッチ状態
 boolean preTouchStatue = false;		// 前回のタッチ状態
@@ -31,6 +31,8 @@ CapacitiveSensor *CapSensor = new CapacitiveSensor(transPin, recievePin);
 long cap_buffer[BUFFER_LENGTH];
 int bufferIndex = 0;
 
+/* モーター */
+const int motorPin = 9;
 
 /*-----------------------------------------------------------------*/
 
@@ -44,6 +46,9 @@ void setup() {
 
 	/* Serial通信開始 */
 	Serial.begin(9600);
+
+        /* モーター */
+        pinMode(motorPin,OUTPUT); //信号用ピン
 }
 
 
@@ -63,6 +68,15 @@ void loop() {
 		touchStatus = preTouchStatue;
 	}
 	preTouchStatue = touchStatus;
+
+        // タッチされた場合の処理
+        if(touchStatus == true){
+          digitalWrite(motorPin,HIGH);
+          delay(100);
+          digitalWrite(motorPin,LOW);
+          delay(100);
+        }
+          
 
 	// デバッグ用
     #ifdef DEBUG
